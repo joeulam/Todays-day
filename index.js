@@ -27,7 +27,7 @@ function getTemp(coordinates){
   var xhr = new XMLHttpRequest();
   var lat = coordinates[0];
   var lng = coordinates[1];
-  xhr.open('GET', "https://api.weather.gov/points/"+lat+","+lng+"");
+  xhr.open('GET', "https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lng+"&hourly=temperature_2m&temperature_unit=fahrenheit&windspeed_unit=mph");
   xhr.send();
   xhr.onreadystatechange = processRequestTemp;
   xhr.addEventListener("readystatechange", processRequestTemp, false);
@@ -35,29 +35,16 @@ function getTemp(coordinates){
     if (xhr.readyState == 4 && xhr.status == 200) {
         var response = JSON.parse(xhr.responseText);
         console.log(response);
-        forecastLink = toString(response.properties.forecast)
-        h = ((response.properties.forecast))
+        h = ((response.hourly.temperature_2m))
+        const d = new Date();
+        let hour = d.getHours();
         console.log(h)
-        xhr = new XMLHttpRequest();
-        xhr.open('GET', ""+h+"");
-        xhr.send();
-        xhr.onreadystatechange = processRequestTemps;
-        xhr.addEventListener("readystatechange", processRequestTemps, false);
-        function processRequestTemps(e){
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          var response = JSON.parse(xhr.responseText);
-          console.log(response);
-          console.log(response.properties.periods[0].temperature);
-
-          document.getElementById("temperature").innerHTML = (response.properties.periods[0].temperature)
-          return;
-        }
+        temp.innerHTML = Math.round(h[hour])
       }
-        temp.innerHTML = response
         return;
     }
   }
-}
+
 
 
 
