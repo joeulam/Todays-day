@@ -3,25 +3,28 @@
 
 
 import "../public/globals.css"
-export default function Home() {
+export default function Home(posts) {
+  
+    
   return (
     <>
-      <main>
         <head>
           <title>Weather</title>
         </head>
+        
+
+          return(
         <body>
-          <h1 id="temp">Temperature</h1>
+          <h1 id="temp">{posts}</h1>
           <h2 id="location">Location</h2>
         </body>
         
-      </main>
       
      
 
     
+          )
 
-    
     </>
   )
 }
@@ -40,38 +43,13 @@ function getLocation() {
   console.log(`Longitude: ${crd.longitude}`);
   console.log(`More or less ${crd.accuracy} meters.`);
   coordinate = [crd.latitude,crd.longitude]
-  getCity(coordinate)
   return coordinate
-
-  var lat = coordinates[0];
-  var lng = coordinates[1];
 }
 
 
 
 
-  function getCity(coordinates) {
-    var xhr = new XMLHttpRequest();
-    var lat = coordinates[0];
-    var lng = coordinates[1];
   
-    // Paste your LocationIQ token below.
-    xhr.open('GET', "https://us1.locationiq.com/v1/reverse.php?key=pk.495483f503e16834a4ff3b2f5157164e&lat=" +
-    lat + "&lon=" + lng + "&format=json", true);
-    xhr.send();
-    xhr.onreadystatechange = processRequest;
-    xhr.addEventListener("readystatechange", processRequest, false);
-
-    function processRequest(e) {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = JSON.parse(xhr.responseText);
-            var city = response.address.city;
-            console.log(response);
-            x.innerHTML = city
-            return;
-        }
-    }
-  }
 
 export async function getStaticProps(){
   location = getLocation()
@@ -81,8 +59,14 @@ export async function getStaticProps(){
   const d = new Date();
   let hour = d.getHours();
   console.log(h)
-  temp.innerHTML = Math.round(h[hour])
+  finaltemp = Math.round(h[hour])
   const Lresponse = await fetch("https://us1.locationiq.com/v1/reverse.php?key=pk.495483f503e16834a4ff3b2f5157164e&lat="+location[0] + "&lon=" + location[1] + "&format=json")
   const Ldata = await Lresponse.json()
   city = Ldata.address.city;
+
+  return{
+    props:{
+      data: finaltemp,
+    }
+  }
 }
