@@ -4,35 +4,33 @@ import Image from 'next/image'
 
 
 
+import "../public/globals.css"
 export default function Home() {
   return (
-    <main>
-      <div>
-      <head>
-        <title>Weather</title>
-      </head>
-
-      
+    <>
+      <main>
+        <head>
+          <title>Weather</title>
+        </head>
         <body>
-
-          <div>
-            <h1 id="temperature">Temp</h1>
-            <h2 id="location">Location</h2>
-          </div>
-
+          <h1 id="temp">Temperature</h1>
+          <h2 id="location">Location</h2>
         </body>
         
-
-        
-      </div>
+      </main>
+      
      
 
     
 
-        
-        
-
     
-    </main>
+    </>
   )
+}
+
+
+export async function getStaticProps(){
+  const reponse = await fetch("")
+  const data = await reponse.json()
+  
 }
