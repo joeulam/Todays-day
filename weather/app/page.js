@@ -1,15 +1,17 @@
 import "../public/globals.css";
 
-export default function Home({ temperature, location }) {
+export default function Home({ props }) {
+  const temperature = props?.Temp;
+
   return (
     <>
       <head>
         <title>Weather</title>
       </head>
-      <div>
-        <h1 id="temp">{temperature}</h1>
-        <h2 id="location">{location}</h2>
-      </div>
+        <body>
+          <h1 id="temp">{temperature}</h1>
+          <h2 id="location">Location</h2>
+        </body>
     </>
   );
 }
@@ -51,7 +53,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      data,
+      data:{Temp:finaltemp,City:city}
     },
   };
 }
